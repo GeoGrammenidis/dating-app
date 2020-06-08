@@ -20,7 +20,7 @@ export class Queries {
     }
 
     public notification(like_id: number) {
-        return knex('likes').join('users', {'users.id': 'likes.person_that_liked'}).where({'likes.id':like_id});
+        return knex('likes').join('users', { 'users.id': 'likes.person_that_liked' }).where({ 'likes.id': like_id });
     }
 
 }
