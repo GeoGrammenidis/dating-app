@@ -35,5 +35,11 @@ export class RequestRoutes {
                 res.status(200).send("liked successfully");
             })
         });;
+
+        this.router.post("/notification", passport.authenticate('jwt', { session: false }), function (req: Request, res: Response) {
+            queries.notification(req.body.like_id).then((user_liked: any) => {
+                res.status(200).send(user_liked);
+            })
+        });;
     }
 }

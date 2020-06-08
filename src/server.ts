@@ -7,6 +7,7 @@ import errorMiddleware from './middleware/error.middleware';
 import requestNotFoundMiddleware from './middleware/requestNotFound.middleware';
 import { AuthRoutes } from "./routes/auth";
 import { RequestRoutes } from "./routes/requests";
+import ioserver, { Socket } from 'socket.io';
 
 class Server {
   public app: express.Application;
@@ -53,3 +54,12 @@ class Server {
 const server = new Server();
 
 server.start();
+
+
+const io = ioserver(server);
+
+io.on('connection', (socket) => {
+	socket.on('like', (data) => {
+		socket.broadcast.emit('liked', data);// some data from client. Probably the like id.
+	})
+})
