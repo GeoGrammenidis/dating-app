@@ -37,8 +37,14 @@ export class RequestRoutes {
         });;
 
         this.router.post("/notification", passport.authenticate('jwt', { session: false }), function (req: Request, res: Response) {
+            let myuser = <[{ id: number }]>req.user;
             queries.notification(req.body.like_id).then((user_liked: any) => {
-                res.status(200).send(user_liked);
+                queries.checkUser(user_liked[0].image_id).then((likes: any) => {
+                    if(likes[0].owner_id== myuser[0].id)
+                        res.status(200).send(user_liked);
+                    else
+                        res.status(500).send("suspicious unauthorized request")
+                })
             })
         });;
     }

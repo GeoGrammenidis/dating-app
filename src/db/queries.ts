@@ -18,9 +18,10 @@ export class Queries {
     public like(userRequested: number, picture_id: number) {
         return knex('likes').insert({ person_that_liked: userRequested, image_id: picture_id });
     }
-
     public notification(like_id: number) {
         return knex('likes').join('users', { 'users.id': 'likes.person_that_liked' }).where({ 'likes.id': like_id });
     }
-
+    public checkUser(image_id: number) {
+        return knex('images').where({id:image_id});
+    }
 }
